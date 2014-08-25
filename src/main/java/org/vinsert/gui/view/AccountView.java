@@ -112,7 +112,9 @@ public final class AccountView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Account selected = lstAccounts.getSelectedValue();
-                if (selected != null) {
+                if (!validateForm()) {
+                    // Form input was invalid.
+                } else if (selected != null) {
                     controller.saveAccount(
                             selected,
                             txtUsername.getText(),
@@ -261,5 +263,16 @@ public final class AccountView extends JFrame {
 
     public Skill getLampSkill() {
         return (Skill) cbxLampSkill.getSelectedItem();
+    }
+
+    private boolean validateForm() {
+        if (getUsername().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Username is required", "Error !", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (getPassword().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Password is required", "Error !", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 }
